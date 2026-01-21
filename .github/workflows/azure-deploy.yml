@@ -10,8 +10,8 @@ on:
 env:
   AZURE_WEBAPP_NAME: smartgarden
   DOTNET_VERSION: '9.0.x'
-  PROJECT_PATH: './SmartGardenApi'
-  PUBLISH_PATH: './SmartGardenApi/publish'
+  PROJECT_PATH: '.'
+  PUBLISH_PATH: './publish'
 
 jobs:
   build-and-deploy:
