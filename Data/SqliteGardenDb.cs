@@ -17,16 +17,13 @@ public sealed class SqliteGardenDb
             ?? Environment.GetEnvironmentVariable("ConnectionStrings:Garden")
             ?? "Data Source=garden.db";
         
-        // No Azure, usa o diretório persistente se disponível
+        // No Azure, usa o diretório persistente /home
         if (ConnectionString.StartsWith("Data Source=") && 
-            !ConnectionString.Contains("/home/data/") && 
-            Directory.Exists("/home/data"))
+            !Path.IsPathRooted(ConnectionString.Replace("Data Source=", "").Trim()))
         {
             var dbName = ConnectionString.Replace("Data Source=", "").Trim();
-            if (dbName == "garden.db")
-            {
-                ConnectionString = "Data Source=/home/data/garden.db";
-            }
+            var persistentPath = Path.Combine("/home", dbName);
+            ConnectionString = $"Data Source={persistentPath}";
         }
     }
 
