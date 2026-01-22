@@ -57,8 +57,8 @@
 
 ### 4️⃣ Verificar Deployment
 
-1. Vai a: `https://smartgardenapi.azurewebsites.net/api/swagger`
-2. Ou testa: `https://smartgardenapi.azurewebsites.net/api/auth/register?username=test&password=test123`
+1. Vai a: `https://smartgarden-avekcvadgqd9f3hm.spaincentral-01.azurewebsites.net/api/swagger`
+2. Ou testa: `https://smartgarden-avekcvadgqd9f3hm.spaincentral-01.azurewebsites.net/api/auth/register?username=test&password=test123`
 
 ## ✅ Pronto!
 

@@ -78,6 +78,18 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
     c.DescribeAllParametersInCamelCase();
+    
+    // Configuração para funcionar com path base /api
+    c.PreSerializeFilters.Add((swagger, httpReq) =>
+    {
+        swagger.Servers = new List<Microsoft.OpenApi.Models.OpenApiServer>
+        {
+            new Microsoft.OpenApi.Models.OpenApiServer 
+            { 
+                Url = $"{httpReq.Scheme}://{httpReq.Host.Value}/api" 
+            }
+        };
+    });
 });
 
 // SQLite (sem Entity Framework)
@@ -101,11 +113,14 @@ app.UsePathBase("/api");
 
 // --- 2. CONFIGURAÇÃO DE PIPELINE (SEM MIDDLEWARE MANUAL) ---
 
-if (app.Environment.IsDevelopment())
+// Swagger disponível em todas as ambientes (Development e Production)
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    // Com UsePathBase("/api"), o endpoint é relativo ao path base
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Smart Garden API v1");
+    c.RoutePrefix = "swagger"; // Acessível em /api/swagger
+});
 
 app.UseHttpsRedirection();
 

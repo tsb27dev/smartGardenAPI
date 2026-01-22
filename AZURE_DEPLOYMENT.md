@@ -209,12 +209,12 @@ O Azure App Service fornece HTTPS automaticamente com certificado SSL gratuito.
 ### URLs
 
 Após deployment, a tua API estará disponível em:
-- `https://smartgardenapi.azurewebsites.net/api`
+- `https://smartgarden-avekcvadgqd9f3hm.spaincentral-01.azurewebsites.net/api`
 
 ## Verificar Deployment
 
-1. Vai a `https://smartgardenapi.azurewebsites.net/api/swagger` (se Swagger estiver ativo em produção)
-2. Testa um endpoint: `https://smartgardenapi.azurewebsites.net/api/auth/register?username=test&password=test123`
+1. Vai a `https://smartgarden-avekcvadgqd9f3hm.spaincentral-01.azurewebsites.net/api/swagger` (Swagger está ativo em produção)
+2. Testa um endpoint: `https://smartgarden-avekcvadgqd9f3hm.spaincentral-01.azurewebsites.net/api/auth/register?username=test&password=test123`
 
 ## Troubleshooting
 

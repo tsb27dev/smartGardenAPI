@@ -83,10 +83,10 @@ Ou no Azure Portal:
 
 ```bash
 # Testa um endpoint
-curl https://smartgarden.azurewebsites.net/api/auth/register?username=test&password=test123
+curl https://smartgarden-avekcvadgqd9f3hm.spaincentral-01.azurewebsites.net/api/auth/register?username=test&password=test123
 
 # Ou abre no browser
-https://smartgarden.azurewebsites.net/api/swagger
+https://smartgarden-avekcvadgqd9f3hm.spaincentral-01.azurewebsites.net/api/swagger
 ```
 
 ### 3. Verificar Logs
@@ -143,7 +143,7 @@ Ou no Azure Portal:
    - GitHub → Actions → vê o workflow
    - Aguarda até estar completo (✅)
 5. **Testa no Azure**:
-   - Vai a `https://smartgarden.azurewebsites.net/api/swagger`
+   - Vai a `https://smartgarden-avekcvadgqd9f3hm.spaincentral-01.azurewebsites.net/api/swagger`
 
 ## Dica: Verificar Último Deployment
 
