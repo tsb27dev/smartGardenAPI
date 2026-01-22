@@ -13,18 +13,43 @@ public sealed class SqliteGardenDb
     public SqliteGardenDb(IConfiguration configuration)
     {
         // Tenta ler da connection string primeiro, depois de variável de ambiente, depois default
-        ConnectionString = configuration.GetConnectionString("Garden") 
+        var connectionString = configuration.GetConnectionString("Garden") 
             ?? Environment.GetEnvironmentVariable("ConnectionStrings:Garden")
             ?? "Data Source=garden.db";
         
-        // No Azure, usa o diretório persistente /home
-        if (ConnectionString.StartsWith("Data Source=") && 
-            !Path.IsPathRooted(ConnectionString.Replace("Data Source=", "").Trim()))
+        // Resolve caminhos relativos para um local persistente
+        if (connectionString.StartsWith("Data Source="))
         {
-            var dbName = ConnectionString.Replace("Data Source=", "").Trim();
-            var persistentPath = Path.Combine("/home", dbName);
-            ConnectionString = $"Data Source={persistentPath}";
+            var dbPath = connectionString.Replace("Data Source=", "").Trim();
+            string fullPath;
+            
+            // Se é um caminho relativo (não começa com /)
+            if (!Path.IsPathRooted(dbPath))
+            {
+                // Tenta usar /home/site/wwwroot (Azure) ou /tmp (fallback)
+                string basePath = Directory.Exists("/home/site/wwwroot") 
+                    ? "/home/site/wwwroot"
+                    : "/tmp";
+                
+                fullPath = Path.Combine(basePath, dbPath);
+            }
+            else
+            {
+                // Caminho absoluto - usa diretamente
+                fullPath = dbPath;
+            }
+            
+            // Cria o diretório se não existir (para caminhos absolutos e relativos)
+            var directory = Path.GetDirectoryName(fullPath);
+            if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+            
+            connectionString = $"Data Source={fullPath}";
         }
+        
+        ConnectionString = connectionString;
     }
 
     public SqliteConnection CreateConnection() => new(ConnectionString);
